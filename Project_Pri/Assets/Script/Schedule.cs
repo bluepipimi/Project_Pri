@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class Schedule : MonoBehaviour {
 
     private List<string> schedules; // 예약된 정보
-    public GameObject[] bookedSchedules; // 예약된 정보 UI 개체
+    public GameObject[] bookedSchedules; // UI에서 상순, 중순, 하순
+    public Text ResultText; // 실행 결과 상자
 
     public Sprite arbeit1; // 알바1 그림
     public Sprite arbeit2; // 알바2 그림
@@ -23,7 +24,7 @@ public class Schedule : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+	   	
 	}
 
     public void AddSchedule(int i) // 스케줄 추가
@@ -48,7 +49,20 @@ public class Schedule : MonoBehaviour {
         DrawBookedSchedule();
     }
 
-    public void DeleteSchdule(int i) // 스케줄 제거
+    public void DeleteSchedule() // 스케줄 제거 (클릭하면 맨 마지막 스케줄을 지운다.)
+    {
+        if(schedules.Count <= 0)
+        {
+            Debug.Log("스케줄이 비었습니다.");
+        }
+        else
+        {
+            int lastIndex = schedules.Count - 1;
+            schedules.RemoveAt(lastIndex);
+        }
+        DrawBookedSchedule();
+    }
+    public void DeleteSchedule(int i) // 스케줄 제거 (클릭하면 클릭한 스케줄을 지운다.)
     {
         // 두개의 스케줄이 예약되어 있을 때 첫번째를 클릭하면 두번쨰가 첫번쨰로 와야 한다. 
         if(schedules.Count <= 0)
@@ -131,6 +145,37 @@ public class Schedule : MonoBehaviour {
             bookedSchedules[2].GetComponent<Image>().sprite = Last10Days;
         }
         
+    }
+
+    public void ShowResult()
+    {
+        if(schedules.Count < 3)
+        {
+            Debug.Log("스케줄을 전부 지정해주세요.");
+            return;
+        }
+        ResultText.text = "";
+
+        string[] result = new string[3];
+        for(int i = 0; i < 3; i++)
+        {
+            if (schedules[i] == "arbeit1")
+            {
+                result[i] = "알바1";
+            }
+            else if (schedules[i] == "arbeit2")
+            {
+                result[i] = "알바2";
+            }
+            else if (schedules[i] == "arbeit3")
+            {
+                result[i] = "알바3";
+            }
+        }
+
+        ResultText.text = "상순 : " + result[0] + "\n";
+        ResultText.text += "중순 : " + result[1] + "\n";
+        ResultText.text += "하순 : " + result[2] + "\n";
     }
 
 

@@ -233,16 +233,13 @@ public class Schedule : MonoBehaviour {
         //Debug.Log(calendar.LastStart);
         //for (int i = 0; i < decidedSchedules.Count; i++)
         //    Debug.Log(decidedSchedules[i]);
-
-        // 날짜마다 스케줄을 실행하고 능력치를 올리고
-        
-        
         //Debug.Log(decidedSchedules.Count); // 31
+
         InvokeRepeating("executeSchedules", 0.1f, 1.0f);
 
     }
 
-    private void executeSchedules()
+    private void executeSchedules() // 스케줄을 실행한다
     {
         //Debug.Log("day " + day);
         string tmp = string.Empty;
@@ -255,7 +252,7 @@ public class Schedule : MonoBehaviour {
             day = 0;
             decidedSchedules.Clear();
             calendar.IncreaseMonth(); // 스케줄이 다 실행되면 다음달로 넘어간다.
-            calendar.ShowMonth();
+            calendar.ShowCalendar();
             ResetShedule();
             HpText.text = player.HP.ToString();
         }
